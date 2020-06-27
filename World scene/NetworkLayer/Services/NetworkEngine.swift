@@ -14,9 +14,9 @@ import Foundation
 class NetworkEngine {
     
     //MARK:- get all data of any resource based on the end point (resource).
-    // 1- get all news from ( get all ) endpoint , decode the full modle and return data decoded into decodable
+    // 1- get all news from (get all) endpoint , decode the full modle and return data decoded into decodable
     //       or error by completion.
-    // 2- get all sources from ( sources) endpoint.
+    // 2- get all sources from (sources) endpoint.
     // 3- get all headlines from (Top headlines) endpoint.
     
     
