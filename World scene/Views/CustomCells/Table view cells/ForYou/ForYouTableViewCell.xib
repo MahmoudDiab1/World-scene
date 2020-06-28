@@ -94,10 +94,7 @@
                 <outlet property="articleTitle" destination="2Sc-n3-FNs" id="V5V-qA-gVm"/>
                 <outlet property="authorName" destination="n5D-dV-yyZ" id="p4C-HK-3he"/>
                 <outlet property="backgroundCellView" destination="3qu-sL-TeH" id="txd-Qe-CS3"/>
-                <outlet property="descriptionTxtView" destination="VmY-KW-jpJ" id="ZjQ-o4-5Me"/>
                 <outlet property="sourceName" destination="bKE-hS-I9T" id="ItJ-3T-vDw"/>
-                <outlet property="titleLable" destination="2Sc-n3-FNs" id="cFR-JO-7hE"/>
-                <outlet property="writerLable" destination="n5D-dV-yyZ" id="9S1-h8-6ZL"/>
             </connections>
             <point key="canvasLocation" x="56.521739130434788" y="107.8125"/>
         </tableViewCell>

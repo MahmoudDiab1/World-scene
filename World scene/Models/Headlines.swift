@@ -15,15 +15,15 @@ struct HeadlinesModel: Decodable {
 }
 
 struct Headline: Decodable {
-    let source: headlineSource?
-    let author, title, description: String?
-    let url: String?
-    let urlToImage: String?
-    let publishedAt: String?
-    let content: String?
+    var source: headlineSource?
+    var author, title, description: String?
+    var url: String?
+    var urlToImage: String?
+    var publishedAt: String?
+    var content: String?
 }
 
 struct headlineSource: Decodable {
-    let id: String?
-    let name: String?
+    var id: String?
+    var name: String?
 }

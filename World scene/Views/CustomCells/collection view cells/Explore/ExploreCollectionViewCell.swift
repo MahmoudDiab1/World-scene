@@ -10,8 +10,7 @@ import UIKit
 
 class ExploreCollectionViewCell: UICollectionViewCell {
     
-    //    MARK:- Outlets
-    @IBOutlet weak var categoryImage: UIImageView!
+    //    MARK:- Outlets 
     //        @IBOutlet weak var imageEffectView: UIView!
     @IBOutlet weak var categoryName: UILabel!
     //    MARK:- Variable
@@ -24,10 +23,8 @@ class ExploreCollectionViewCell: UICollectionViewCell {
         
     }
     //    MARK::- Functions
-    func  configureItem(with category : String ,image:String ){
-        categoryName.text = category.uppercased()
-        categoryImage.image = UIImage(named: image)
-        
+    func  configureItem(with category : String   ){
+        categoryName.text = category.uppercased() 
     }
     
 }

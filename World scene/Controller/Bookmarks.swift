@@ -10,7 +10,7 @@ import UIKit
 import Firebase
 
 class Bookmarks: UIViewController {
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
          

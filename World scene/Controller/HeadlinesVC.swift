@@ -7,7 +7,7 @@
 //
 
 import UIKit
- 
+  
 
 class HeadlinesVC: UIViewController {
   
@@ -17,7 +17,9 @@ class HeadlinesVC: UIViewController {
     
     
         //MARK:- variables-
-        let newsCategories=[
+         
+ 
+    let newsCategories=[
             "business","entertainment","general",
             "health","science","sports","technology"
         ]
@@ -29,6 +31,12 @@ class HeadlinesVC: UIViewController {
         override func viewWillAppear(_ animated: Bool) {
             super.viewWillAppear(animated)
          setupScene()
+            
+                  
+            
+             
+                   
+                   
              
         }
         override func viewDidLoad() {
@@ -83,15 +91,19 @@ class HeadlinesVC: UIViewController {
         func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
             guard let cell  = tableView.dequeueReusableCell(withIdentifier: "HeadlineTableViewCell", for: indexPath) as? HeadlineTableViewCell
                 else { return HeadlineTableViewCell() }
-            cell.configureCell(article: headlinesDataSource[indexPath.row])
+            cell.configureCell(article: headlinesDataSource[indexPath.row],flage:true)
             return cell
         }
         
-        func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-            let article = headlinesDataSource[indexPath.row]
-            let vc = storyboard?.instantiateViewController(identifier: "ArticleVC") as! ArticleVC
-            vc.article = article
-            navigationController?.pushViewController(vc, animated: true)
+        func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+            
+            DispatchQueue.main.async {
+                 
+                let article = self.headlinesDataSource[indexPath.row]
+                let vc = self.storyboard?.instantiateViewController(identifier: "ArticleVC") as! ArticleVC
+                vc.article=article
+                self.navigationController?.pushViewController(vc, animated: true)
+            }
         }
         
     }

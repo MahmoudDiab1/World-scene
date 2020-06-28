@@ -34,6 +34,7 @@ class ForYouTableViewCell: UITableViewCell {
     //    MARK:- Functions
     
     func  configureCell(with article : article?) {
+  
         sourceName.text = article?.source?.name
         authorName.text = article?.author
         articleTitle.text = article?.title

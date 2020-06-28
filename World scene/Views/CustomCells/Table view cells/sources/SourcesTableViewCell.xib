@@ -79,14 +79,11 @@
             </constraints>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
-                <outlet property="categoryLbl" destination="crD-8p-Dae" id="V8Q-32-owL"/>
                 <outlet property="categoryName" destination="crD-8p-Dae" id="UiD-al-uTo"/>
                 <outlet property="cellBackgroundView" destination="I6O-lb-uod" id="tgQ-Fy-nOI"/>
-                <outlet property="followBtn" destination="4yo-3D-rE1" id="pM9-jM-FVy"/>
                 <outlet property="followButton" destination="4yo-3D-rE1" id="cBd-35-sji"/>
                 <outlet property="sourceDescription" destination="gPR-wk-byQ" id="dku-W5-0r1"/>
                 <outlet property="sourceName" destination="kQx-lY-Yo0" id="Xpk-ve-QAv"/>
-                <outlet property="sourceNameLbl" destination="kQx-lY-Yo0" id="Elb-c4-que"/>
             </connections>
             <point key="canvasLocation" x="-252.17391304347828" y="102.79017857142857"/>
         </tableViewCell>

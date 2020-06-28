@@ -14,6 +14,7 @@ class ForYouVC: UIViewController {
         @IBOutlet weak var forYouTable: UITableView!
         //    MARK:- Variables
         var articlesForYou = [article?]()
+    
         var sourcesRecieved = [String]()
         var keywordsRecieved = [String]()
         var languagesRecieved = [String]()
@@ -38,12 +39,10 @@ class ForYouVC: UIViewController {
         
         
             @IBAction func setPreferences(_ sender: UIButton) {
-                switch sender.tag
-                {
-//                case 0:
-//                    
-//                    let vc = storyboard?.instantiateViewController(withIdentifier: "SourceVC") as! SourceVC
-//                    navigationController?.pushViewController(vc, animated: true)
+                switch sender.tag {
+                case 0:
+                    let vc = storyboard?.instantiateViewController(withIdentifier: "SourcesVC") as! SourcesVC
+                    navigationController?.pushViewController(vc, animated: true)
                 case 1:
                     let vc = storyboard?.instantiateViewController(withIdentifier: "LanguageVC") as! LanguageVC
                     navigationController?.pushViewController(vc, animated: true)
@@ -65,8 +64,7 @@ class ForYouVC: UIViewController {
           forYouTable.register(UINib(nibName: "forYouCell", bundle: nil), forCellReuseIdentifier: "forYouCellId")
       }
             
-    func getPreferedArticles()
-     {
+    func getPreferedArticles() {
 
         getPreferedSources { (sources) in
             self.sourcesRecieved.append(contentsOf: sources)
@@ -103,13 +101,12 @@ class ForYouVC: UIViewController {
                 }
             }
         }
-        func getPreferedLanguages(completion : @escaping(_ languages:[String])->())
-           {
+        func getPreferedLanguages(completion : @escaping(_ languages:[String])->()) {
                if  let currentUid = Firebase.Auth.auth().currentUser?.uid
                {
                    let ref = Database.database().reference().child("users").child(currentUid)
                    ref.child("preferedLanguages").observe(.value) { (snapshot) in
-                       let dataDic = (snapshot.value) as! [String : Any]
+                    guard let dataDic = (snapshot.value) as? [String : Any] else {return}
                        completion(dataDic.map{$0.key})
                    }
                }
@@ -130,7 +127,7 @@ class ForYouVC: UIViewController {
 
     //MARK:- Extensions
     //tableView
-    extension ForYouVC:UITableViewDataSource, UITableViewDelegate
+    extension ForYouVC : UITableViewDataSource, UITableViewDelegate
     {
         func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
             return articlesForYou.count

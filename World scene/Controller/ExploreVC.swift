@@ -120,15 +120,16 @@ class ExploreVC: UIViewController {
         func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
             guard  let item = collectionView.dequeueReusableCell(withReuseIdentifier: "ExploreCollectionViewCell", for: indexPath) as? ExploreCollectionViewCell else { return ExploreCollectionViewCell() }
             let category = newsCategories[indexPath.item]
-            let image = newsCategories[indexPath.row]
-            item.configureItem(with: category, image:image)
+            
+            item.configureItem(with: category )
             return item
         }
         
         func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-            let itemWidth :CGFloat = ( view.frame.width-5)/1.7
             
-            return CGSize(width: itemWidth, height: itemWidth)
+            let itemWidth :CGFloat = ( view.frame.width-5)/2.1
+            let itemHeight :CGFloat = ( view.frame.height-5)/2.1
+            return CGSize(width: itemWidth, height: itemHeight)
         }
         func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
             let category = newsCategories[indexPath.item]

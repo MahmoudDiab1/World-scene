@@ -31,7 +31,7 @@ class SourcesVC: UIViewController {
         {
             sourcesList.dataSource=self
             sourcesList.delegate=self
-            sourcesList.register(UINib.init(nibName:"sources", bundle: nil), forCellReuseIdentifier: "sourcesCell")
+            sourcesList.register(UINib.init(nibName:"SourcesTableViewCell", bundle: nil), forCellReuseIdentifier: "SourcesTableViewCell")
             
             NetworkEngine.fetchData(serviceEndPoint: SourcesEndPoint.getsources) { ( result:Result<SourcesModle,APIError> ) in
                 switch result
