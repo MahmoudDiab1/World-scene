@@ -22,16 +22,16 @@ class SignUpVC: UIViewController {
     @IBOutlet weak var signinBtn: UIButton!
     @IBOutlet weak var signupBtn: UIButton!
     
-//    MARK:- Lifecycle -
- 
+    //    MARK:- Lifecycle -
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-         
+        
     }
     override func viewDidAppear(_ animated: Bool) {
-   
-         setupScene()
+        
+        setupScene()
     }
     
     override func viewDidLoad() {
@@ -42,13 +42,13 @@ class SignUpVC: UIViewController {
     // MARK:- Actions and functions
     func isLoggedIn() {
         if UserDefaults.standard.bool(forKey:"isSignedIn")==true
-               {
-           let mainTab = self.storyboard?.instantiateViewController(identifier: "MainTabBar") as! MainTabBar
-                          mainTab.modalPresentationStyle = .fullScreen
-                          mainTab.modalTransitionStyle = .flipHorizontal
-                          mainTab.selectedViewController = mainTab.viewControllers?[1]
-                          self.present(mainTab,animated: false,completion: nil)
-               }
+        {
+            let mainTab = self.storyboard?.instantiateViewController(identifier: "MainTabBar") as! MainTabBar
+            mainTab.modalPresentationStyle = .fullScreen
+            mainTab.modalTransitionStyle = .flipHorizontal
+            mainTab.selectedViewController = mainTab.viewControllers?[1]
+            self.present(mainTab,animated: false,completion: nil)
+        }
     }
     func setupScene() {
         view.bindToKeyboard()
@@ -99,12 +99,12 @@ class SignUpVC: UIViewController {
         Auth.auth().createUser(withEmail: email, password: password){ (result, error) in
             guard error == nil
                 else { self.errorMessageLbl.text = SignupError.existedUser.errorDescription; return }
-           
+            
             guard let uid = result?.user.uid else{return}
             let userData:[String:Any] = ["name":userName,
                                          "email":email,
                                          "password":password
-                                        ]
+            ]
             
             let ref = Database.database().reference()
             ref.child("users").child(uid).child("userData").setValue(userData)
@@ -119,8 +119,7 @@ class SignUpVC: UIViewController {
     @IBAction func gotoSignIn(_ sender: Any)  {
         guard let signInVC = self.storyboard?.instantiateViewController(withIdentifier: "SignInVC") as? SignInVC else { return }
         signInVC.modalPresentationStyle = .fullScreen
-        signInVC.modalTransitionStyle = .flipHorizontal
-        
+        signInVC.modalTransitionStyle = .flipHorizontal 
         self.present(signInVC,animated: true,completion: nil)
     } 
 }

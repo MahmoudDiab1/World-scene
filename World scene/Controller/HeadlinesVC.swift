@@ -7,132 +7,128 @@
 //
 
 import UIKit
-  
+
 
 class HeadlinesVC: UIViewController {
-  
+    
     //MARK:- Outlets-
-        @IBOutlet weak var headlinesCategoriesCollectionView: UICollectionView!
-        @IBOutlet weak var headlinesTableView: UITableView!
-    
-    
-        //MARK:- variables-
-         
- 
+    @IBOutlet weak var headlinesCategoriesCollectionView: UICollectionView!
+    @IBOutlet weak var headlinesTableView: UITableView!
+     
+    //MARK:- variables-
     let newsCategories=[
-            "business","entertainment","general",
-            "health","science","sports","technology"
-        ]
-         let languageOptions = ["kj","sd","ds","ds","ds"]
-        var headlinesDataSource = [Headline?]()
-        var country="us"
+        "business","entertainment","general",
+        "health","science","sports","technology"
+    ]
+     
+    var headlinesDataSource = [Headline?]()
+     
+    var country = "us"
+    var dataSource = ObjectDataSource()
+    //MARK:- Lifecycle
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setupScene()
+    }
+    override func viewDidLoad() {
+        super.viewDidLoad()
+ 
+        
+    }
     
-        //MARK:- Lifecycle
-        override func viewWillAppear(_ animated: Bool) {
-            super.viewWillAppear(animated)
-         setupScene()
-            
-                  
-            
-             
-                   
-                   
-             
-        }
-        override func viewDidLoad() {
-            super.viewDidLoad()
+    //    MARK:- Actions
+    @IBAction func signOutPressed(_ sender: Any) {
+        UserDefaults.standard.set(false, forKey: "isSignedIn")
+        dismiss(animated: true, completion:nil)
     }
+    
+    
+    //    MARK:- Functions
+    func setupScene() {
+        headlinesTableView.dataSource = self
+        headlinesTableView.delegate = self
+        headlinesTableView.register(UINib.init(nibName: "HeadlineTableViewCell", bundle:nil), forCellReuseIdentifier: "HeadlineTableViewCell")
+        headlinesCategoriesCollectionView.dataSource=self
+        headlinesCategoriesCollectionView.delegate=self
+        headlinesCategoriesCollectionView.register(UINib.init(nibName:"HeadlineCategoriesCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "HeadlineCategoriesCollectionViewCell")
         
-        //    MARK:- Actions
-        @IBAction func signOut(_ sender: Any) {
-            UserDefaults.standard.set(false, forKey: "isSignedIn")
-            dismiss(animated: true, completion:nil)
-        }
-        
-        
-        //    MARK:- Functions
-        
-        func setupScene() {
-//           headlinesTableView.allowsSelection = true
-           headlinesTableView.dataSource = self
-           headlinesTableView.delegate = self
-           headlinesTableView.register(UINib.init(nibName: "HeadlineTableViewCell", bundle:nil), forCellReuseIdentifier: "HeadlineTableViewCell")
-            
-           headlinesCategoriesCollectionView.dataSource=self
-           headlinesCategoriesCollectionView.delegate=self
-           headlinesCategoriesCollectionView.register(UINib.init(nibName:"HeadlineCategoriesCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "HeadlineCategoriesCollectionViewCell")
-            
-            TopHeadlineServices.topHeadlinesDeafault(country: "us") { (result:Result<HeadlinesModel, APIError>) in
-                switch result {
-                case .success(let responseResult):
-                    self.headlinesDataSource = responseResult.articles!
-                    self.headlinesTableView.reloadData()
-                case .failure:
-                    print("Handle it later")
-                }
-            }
-            
-        }
-    }
-
-    //    MARK:- extensions
-
-    //TableView
-    extension HeadlinesVC:UITableViewDataSource, UITableViewDelegate  {
-        
-        func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-            return (UIScreen.main.bounds.height/2)
-        }
-        
-        func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-            return headlinesDataSource.count
-        }
-        
-        func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-            guard let cell  = tableView.dequeueReusableCell(withIdentifier: "HeadlineTableViewCell", for: indexPath) as? HeadlineTableViewCell
-                else { return HeadlineTableViewCell() }
-            cell.configureCell(article: headlinesDataSource[indexPath.row],flage:true)
-            return cell
-        }
-        
-        func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-            
-            DispatchQueue.main.async {
-                 
-                let article = self.headlinesDataSource[indexPath.row]
-                let vc = self.storyboard?.instantiateViewController(identifier: "ArticleVC") as! ArticleVC
-                vc.article=article
-                self.navigationController?.pushViewController(vc, animated: true)
+        //        Get All Headlines
+        TopHeadlineServices.headlinesByCountry(country: country) { (result:Result<HeadlinesModel, APIError>) in
+            switch result {
+            case .success(let responseResult):
+                self.headlinesDataSource = responseResult.articles!
+                self.headlinesTableView.reloadData()
+            case .failure:
+                print("Handle it later")
             }
         }
         
     }
+}
 
-    //Collection View
-    extension HeadlinesVC:UICollectionViewDataSource,  UICollectionViewDelegateFlowLayout
-    {
-        func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-            return newsCategories.count
+
+//    MARK:- extensions -
+
+//TableView
+extension HeadlinesVC:UITableViewDataSource, UITableViewDelegate  {
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return (UIScreen.main.bounds.height/2)
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return headlinesDataSource.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell  = tableView.dequeueReusableCell(withIdentifier: "HeadlineTableViewCell", for: indexPath) as? HeadlineTableViewCell
+            else { return HeadlineTableViewCell() }
+        cell.configureHeadlineCell(article: headlinesDataSource[indexPath.row] )
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        DispatchQueue.main.async {
+            let article = self.headlinesDataSource[indexPath.row]
+            let vc = self.storyboard?.instantiateViewController(identifier: "ArticleVC") as! ArticleVC
+            vc.headline=article
+            vc.articleType = "Headline"
+            self.navigationController?.pushViewController(vc, animated: true)
         }
-        
-        func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-            let item=collectionView.dequeueReusableCell(withReuseIdentifier: "HeadlineCategoriesCollectionViewCell", for: indexPath) as! HeadlineCategoriesCollectionViewCell
-            item.headlinesCategoryLable.text=newsCategories[indexPath.item]
-            return item
-        }
-        
-        func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath)  { 
-            let selectedCategory=newsCategories[indexPath.item]
-            TopHeadlineServices.HeadlinesCategoryCountry(country: "us", category: selectedCategory) { (result:Result<HeadlinesModel, APIError>) in
-                switch result
-                {
-                case .success(let responseResult):
-                    self.headlinesDataSource = responseResult.articles!
-                    self.headlinesTableView.reloadData()
-                case .failure:
-                    print("Handle it later")
-                }
+    }
+    
+}
+
+//Collection View
+extension HeadlinesVC:UICollectionViewDataSource,  UICollectionViewDelegateFlowLayout
+{
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return newsCategories.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let item=collectionView.dequeueReusableCell(withReuseIdentifier: "HeadlineCategoriesCollectionViewCell", for: indexPath) as! HeadlineCategoriesCollectionViewCell
+        item.headlinesCategoryLable.text=newsCategories[indexPath.item].uppercased()
+        return item
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let itemWidth :CGFloat = ( view.frame.width-5)/3.2
+        let itemHeight :CGFloat = ( view.frame.height-5)/2.6
+        return CGSize(width: itemWidth, height: itemHeight)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath)  {
+        let selectedCategory=newsCategories[indexPath.item] 
+        TopHeadlineServices.headlinesByCountryCategory(category: selectedCategory) { (result:Result<HeadlinesModel, APIError>) in
+            switch result {
+            case .success(let responseResult):
+                self.headlinesDataSource = responseResult.articles!
+                self.headlinesTableView.reloadData()
+            case .failure:
+                print("Handle it later")
             }
         }
-        
     }
+    
+}

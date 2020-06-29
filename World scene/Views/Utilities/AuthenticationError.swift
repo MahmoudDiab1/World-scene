@@ -13,7 +13,6 @@ enum SignupError:String {
     case existedUser
     case notMatchedPasswords
     case invalidePassword
-    
     var errorDescription:String{
     switch self {
     case .emptyField:
@@ -28,18 +27,13 @@ enum SignupError:String {
   }
 }
 
-
-
 enum SigninError:String {
     case emptyField
     case failedSignIn
-    
-    
     var errorDescription:String {
         switch self {
         case .emptyField:
             return " please fill all data fieldes "
-// to be handeled later
         case  .failedSignIn:
             return " failed to sign in "
         }

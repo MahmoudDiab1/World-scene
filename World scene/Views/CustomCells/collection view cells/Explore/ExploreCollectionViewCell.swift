@@ -22,6 +22,8 @@ class ExploreCollectionViewCell: UICollectionViewCell {
         super.awakeFromNib()
         
     }
+    
+    
     //    MARK::- Functions
     func  configureItem(with category : String   ){
         categoryName.text = category.uppercased() 

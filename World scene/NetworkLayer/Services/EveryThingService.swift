@@ -19,12 +19,7 @@ class EveryThingService {
             completion(result)
         }
     }
-
-func getPreferedNews (sources:[String]?,languages:[String]? , keywords:[String]?,completion:@escaping(Result<ArticlesModel,APIError>)->()) {
-    NetworkEngine.fetchData(serviceEndPoint: EveryThingEndPoint.getPreferedNews(sources: sources, languages: languages, keywords: keywords)) { (result:Result<ArticlesModel, APIError>) in
-        completion(result)
-    }
-}
+ 
 
 
 }

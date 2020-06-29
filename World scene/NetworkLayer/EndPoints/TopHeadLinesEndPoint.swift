@@ -8,13 +8,12 @@
 
 import Foundation
 
-
-
-//MARK:- Responsbility : 1- NewsEndPoint responsible for configuring the request parts(scheme/base/path/parameter/method) of the request sent  to the News API based on different cases. 2- filter response based on query parameter.-
+//MARK:- Responsbility : 1- NewsEndPoint responsible for configuring the request parts(scheme/base/path/parameter/method) of the request sent  to the News API based on different cases.-
+//MARK:- 2- filter response based on query parameter.-
 
 enum TopHeadlinesEndPoint:Endpoint {
-    case  getTopHeadlines(country:String)
-    case getByCategoryCountry(category:String,country:String)
+    case  getByCountry(country:String)
+    case getByCategory (category:String )
 }
 
 extension TopHeadlinesEndPoint {
@@ -32,20 +31,18 @@ extension TopHeadlinesEndPoint {
     }
     var path : String {
         switch self {
-        case .getTopHeadlines:
-            return "/v2/top-headlines"
-        case .getByCategoryCountry:
+        case .getByCategory, .getByCountry:
             return "/v2/top-headlines"
         }
     }
     var parameter: [URLQueryItem] {
         switch self {
-        case .getTopHeadlines(let country ):
+        case .getByCountry(country: let country):
             return [URLQueryItem(name: "country", value:country),
                     URLQueryItem(name: "apiKey", value:"1a779402052e4290838adc06ecd31d37")
                    ]
-        case .getByCategoryCountry(let category , let country ):
-            return [URLQueryItem(name: "country", value:country),
+        case .getByCategory(let category):
+            return [
                     URLQueryItem(name: "category", value:category),
                     URLQueryItem(name: "apiKey", value:"1a779402052e4290838adc06ecd31d37")
                    ]
@@ -53,7 +50,7 @@ extension TopHeadlinesEndPoint {
     }
     var method: String {
         switch self {
-        case .getTopHeadlines, .getByCategoryCountry:
+        case .getByCategory, .getByCountry:
             return "GET"
         }
     }

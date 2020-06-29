@@ -9,7 +9,7 @@
 import UIKit
 import FirebaseAuth
 import Firebase
-class SignInVC: UIViewController {
+class SignInVC: UIViewController{
     
     
     //MARK:- variables
@@ -47,6 +47,8 @@ class SignInVC: UIViewController {
     func setupScene() {
         view.bindToKeyboard()
         hideKeyboardWhenTappedAround()
+        emailSignIn.delegate = self
+        passwordSignIn.delegate = self
         styleLogineScene(Email: emailSignIn, password: passwordSignIn, signInButton: signInButton, signUpButton: signUpButton)
         if UserDefaults.standard.bool(forKey:"isSignedIn")==true {
             let mainTab = self.storyboard?.instantiateViewController(identifier: "MainTabBar") as! MainTabBar
@@ -88,4 +90,9 @@ class SignInVC: UIViewController {
         self.present(signUpVC,animated: true,completion: nil)
     }
 }
-
+extension SignInVC: UITextFieldDelegate {
+func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+      textField.resignFirstResponder()
+      return true
+  }
+}

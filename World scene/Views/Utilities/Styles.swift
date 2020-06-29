@@ -10,7 +10,7 @@ import UIKit
 import Foundation
 
 class Styles {
- 
+    
     static func updateUnderLineWidth()->CGFloat {
         var updatedWidth:CGFloat = 0
         if UIDevice.current.orientation.isLandscape {
@@ -22,18 +22,15 @@ class Styles {
     }
     
     static func styleTextField(textField:UITextField) {
-       let width = updateUnderLineWidth()
+        let width = updateUnderLineWidth()
         let bottomLine=CALayer()
         bottomLine.frame=CGRect(x: 0, y: textField.frame.height, width: width , height: 0.75)
-        //  bottomLine.backgroundColor=UIColor.init(displayP3Red: 1, green: 149/255, blue: 0, alpha: 1).cgColor
         bottomLine.backgroundColor = UIColor.init(displayP3Red: 0, green: 0, blue: 0, alpha: 1).cgColor
         textField.borderStyle = .none
         textField.layer.addSublayer(bottomLine)
     }
     
-    static func styleFilledButton(button:UIButton)
-    {
-        //  button.backgroundColor=UIColor.init(displayP3Red: 33/255, green: 33/255, blue: 33/255, alpha: 1)
+    static func styleFilledButton(button:UIButton) { 
         button.backgroundColor=UIColor.init(displayP3Red: 33/255, green: 33/255, blue: 33/255, alpha: 1)
         
         button.layer.cornerRadius=25

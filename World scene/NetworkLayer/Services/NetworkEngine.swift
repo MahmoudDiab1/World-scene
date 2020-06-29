@@ -52,8 +52,6 @@ class NetworkEngine {
                 }
             }
         }
-        
-        
         task.resume()
     }
     
