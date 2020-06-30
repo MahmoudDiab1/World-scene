@@ -77,7 +77,7 @@ class SignInVC: UIViewController{
                 activityIndecator.stopAnimating();self.errorMsgLbl.text=SigninError.emptyField.errorDescription ; return  }
         Auth.auth().signIn(withEmail: email, password: password) { (user, error) in
             guard error == nil else { self.activityIndecator.isHidden = true
-                self.activityIndecator.stopAnimating();self.errorMsgLbl.text = "Network disconnected.Make sure that you arn't ofline" ; return }
+                self.activityIndecator.stopAnimating();self.errorMsgLbl.text = "User not Existed or network failure!" ; return }
             UserDefaults.standard.set(true, forKey: "isSignedIn") 
             let mainTab = self.storyboard?.instantiateViewController(identifier: "MainTabBar") as! MainTabBar
             mainTab.modalPresentationStyle = .fullScreen
