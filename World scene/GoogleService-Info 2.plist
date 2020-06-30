@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>972144962714-9i5h7m2la71sr2tc4fb8t3tciveapogc.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.972144962714-9i5h7m2la71sr2tc4fb8t3tciveapogc</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDNDduNxem6YZ6fJH5Z2gDeG81INJClypA</string>
+	<key>GCM_SENDER_ID</key>
+	<string>972144962714</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.Diab.World-scene</string>
+	<key>PROJECT_ID</key>
+	<string>world-scene</string>
+	<key>STORAGE_BUCKET</key>
+	<string>world-scene.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:972144962714:ios:f77e104001eee64ceac323</string>
+	<key>DATABASE_URL</key>
+	<string>https://world-scene.firebaseio.com</string>
+</dict>
+</plist>

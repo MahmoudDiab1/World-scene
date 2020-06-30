@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="16119" systemVersion="19F101" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="CoreDataArticle" representedClassName="CoreDataArticle" syncable="YES" codeGenerationType="category">
+        <attribute name="articleContent" optional="YES" attributeType="String"/>
+        <attribute name="articleTitle" optional="YES" attributeType="String"/>
+        <attribute name="authorName" optional="YES" attributeType="String"/>
+        <attribute name="publishedAt" optional="YES" attributeType="String"/>
+        <attribute name="sourceId" optional="YES" attributeType="String"/>
+        <attribute name="sourceName" optional="YES" attributeType="String"/>
+        <attribute name="urlToImage" optional="YES" attributeType="String"/>
+    </entity>
+    <elements>
+        <element name="CoreDataArticle" positionX="-63" positionY="-18" width="128" height="148"/>
+    </elements>
+</model>
