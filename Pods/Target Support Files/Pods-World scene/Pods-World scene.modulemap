@@ -1,0 +1,6 @@
+framework module Pods_World_scene {
+  umbrella header "Pods-World scene-umbrella.h"
+
+  export *
+  module * { export * }
+}
