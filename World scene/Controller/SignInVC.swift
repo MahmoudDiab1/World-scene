@@ -24,7 +24,6 @@ class SignInVC: UIViewController{
     
     
     //MARK:- Lifecycle
-    
     override func viewDidAppear(_ animated: Bool) {
         activityIndecator.isHidden = true
         activityIndecator.stopAnimating()

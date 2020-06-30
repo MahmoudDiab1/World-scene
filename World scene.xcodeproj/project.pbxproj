@@ -17,7 +17,7 @@
 		0A0836B624A749E700909535 /* HeadlineTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0A08363C24A7153D00909535 /* HeadlineTableViewCell.xib */; };
 		0A0836D824A7692E00909535 /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A0836D724A7692E00909535 /* SignUpVC.swift */; };
 		0A0836DA24A76C6000909535 /* SignInVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A0836D924A76C6000909535 /* SignInVC.swift */; };
-		0A5F222224AADE4200EFFCBD /* NoteVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A5F222124AADE4200EFFCBD /* NoteVC.swift */; };
+		0A5F222424AB307000EFFCBD /* NoteVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A5F222324AB306F00EFFCBD /* NoteVC.swift */; };
 		0A7DC75124A7C76400866BA1 /* UIViewExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A7DC75024A7C76400866BA1 /* UIViewExt.swift */; };
 		0A7DC75324A7C7BF00866BA1 /* ViewControllerExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A7DC75224A7C7BF00866BA1 /* ViewControllerExt.swift */; };
 		0A7DC75724A7CAB000866BA1 /* ExploreVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A7DC75624A7CAB000866BA1 /* ExploreVC.swift */; };
@@ -63,7 +63,7 @@
 		0A0836D724A7692E00909535 /* SignUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
 		0A0836D924A76C6000909535 /* SignInVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInVC.swift; sourceTree = "<group>"; };
 		0A4DEF2CA28EF4D76D8CED19 /* Pods_World_scene.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_World_scene.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		0A5F222124AADE4200EFFCBD /* NoteVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NoteVC.swift; path = "../../../../../Library/Mobile Documents/com~apple~CloudDocs/.Trash/NoteVC.swift"; sourceTree = "<group>"; };
+		0A5F222324AB306F00EFFCBD /* NoteVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteVC.swift; sourceTree = "<group>"; };
 		0A7DC75024A7C76400866BA1 /* UIViewExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExt.swift; sourceTree = "<group>"; };
 		0A7DC75224A7C7BF00866BA1 /* ViewControllerExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerExt.swift; sourceTree = "<group>"; };
 		0A7DC75624A7CAB000866BA1 /* ExploreVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreVC.swift; sourceTree = "<group>"; };
@@ -197,17 +197,10 @@
 				0A0836AC24A7354500909535 /* ArticleVC.swift */,
 				0A7DC75624A7CAB000866BA1 /* ExploreVC.swift */,
 				0AFDEFF724A8655B00CF00AC /* BookmarksVC.swift */,
-				0A5F222124AADE4200EFFCBD /* NoteVC.swift */,
+				0A5F222324AB306F00EFFCBD /* NoteVC.swift */,
 				0A0836A624A7292500909535 /* MainTabBar.swift */,
 			);
 			path = Controller;
-			sourceTree = "<group>";
-		};
-		0A0836D624A7577700909535 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Products;
 			sourceTree = "<group>";
 		};
 		0A0836DD24A776F900909535 /* Extensions */ = {
@@ -224,7 +217,6 @@
 			children = (
 				0AAB440F24A6A0FF00E87327 /* World scene */,
 				0AAB440E24A6A0FF00E87327 /* Products */,
-				0A0836D624A7577700909535 /* Products */,
 				6BE2DD1C5EF4D869D6122A73 /* Pods */,
 				0AAB441924A6A10100E87327 /* Assets.xcassets */,
 				057FA114DC1FB3AE32745661 /* Frameworks */,
@@ -475,7 +467,7 @@
 				0AAB443724A6F30800E87327 /* Articles.swift in Sources */,
 				0A0836DA24A76C6000909535 /* SignInVC.swift in Sources */,
 				0A7DC76124A7CE0F00866BA1 /* ExploreCollectionViewCell.swift in Sources */,
-				0A5F222224AADE4200EFFCBD /* NoteVC.swift in Sources */,
+				0A5F222424AB307000EFFCBD /* NoteVC.swift in Sources */,
 				0AAB441324A6A0FF00E87327 /* SceneDelegate.swift in Sources */,
 				0A7DC75324A7C7BF00866BA1 /* ViewControllerExt.swift in Sources */,
 				0AFDEFF824A8655B00CF00AC /* BookmarksVC.swift in Sources */,
