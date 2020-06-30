@@ -12,27 +12,30 @@ import UIKit
 class HeadlinesVC: UIViewController {
     
     //MARK:- Outlets-
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var headlinesCategoriesCollectionView: UICollectionView!
     @IBOutlet weak var headlinesTableView: UITableView!
-     
+    
     //MARK:- variables-
     let newsCategories=[
         "business","entertainment","general",
         "health","science","sports","technology"
     ]
-     
-    var headlinesDataSource = [Headline?]()
-     
+    
+    var headlinesDataSource = [Headline?]() 
     var country = "us"
-    var dataSource = ObjectDataSource()
+    
     //MARK:- Lifecycle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
         setupScene()
+             activityIndicator.isHidden = true
+             activityIndicator.stopAnimating()
     }
     override func viewDidLoad() {
         super.viewDidLoad()
- 
+        
         
     }
     
@@ -58,8 +61,14 @@ class HeadlinesVC: UIViewController {
             case .success(let responseResult):
                 self.headlinesDataSource = responseResult.articles!
                 self.headlinesTableView.reloadData()
+                self.activityIndicator.isHidden = true
+                               self.activityIndicator.stopAnimating()
             case .failure:
-                print("Handle it later")
+                DispatchQueue.main.async {
+                    let alertVC = UIAlertController(title: "Error", message: "No internet", preferredStyle: .alert)
+                    alertVC.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                    self.present(alertVC, animated: true, completion: nil)
+                }
             }
         }
         
@@ -77,6 +86,10 @@ extension HeadlinesVC:UITableViewDataSource, UITableViewDelegate  {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+         
+             activityIndicator.isHidden = false
+             activityIndicator.startAnimating()
+         
         return headlinesDataSource.count
     }
     
@@ -125,8 +138,14 @@ extension HeadlinesVC:UICollectionViewDataSource,  UICollectionViewDelegateFlowL
             case .success(let responseResult):
                 self.headlinesDataSource = responseResult.articles!
                 self.headlinesTableView.reloadData()
+                self.activityIndicator.isHidden = true
+                               self.activityIndicator.startAnimating()
             case .failure:
-                print("Handle it later")
+                DispatchQueue.main.async {
+                    let alertVC = UIAlertController(title: "Error", message: "No internet", preferredStyle: .alert)
+                    alertVC.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                    self.present(alertVC, animated: true, completion: nil)
+                }
             }
         }
     }

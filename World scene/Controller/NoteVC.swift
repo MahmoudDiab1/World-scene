@@ -15,14 +15,16 @@ class NoteVC: UIViewController  {
     @IBOutlet weak var userInterestTxtField: UITextField!
     
     var interestData=[String]()
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupScene()
-        
     }
     func setupScene() {
         addInterestBtn.bindToKeyboard()
-        hideKeyboardWhenTappedAround()
         userInterestTxtField.delegate=self
         interestesTableView.dataSource = self
         interestesTableView.delegate = self
@@ -38,6 +40,7 @@ class NoteVC: UIViewController  {
             guard let data = snapshot.value as? [String:Any] else { return }
             self.interestData = data.map{$0.key}
             self.interestesTableView.reloadData()
+            
         }
         
     }
@@ -48,6 +51,7 @@ class NoteVC: UIViewController  {
             guard let data = snapshot.value as? [String:Any] else { return }
             self.interestData = data.map{$0.key}
             self.interestesTableView.reloadData()
+            
         }
     }
     
@@ -55,9 +59,11 @@ class NoteVC: UIViewController  {
         let deletedItem =  interestData.remove(at: indexPath.row)
         guard let currentUid = Firebase.Auth.auth().currentUser?.uid else { return }
         let ref = Database.database().reference().child("users").child(currentUid).child("InterestsKeywords").child(deletedItem)
-        ref.removeValue { error, _ in
-            print(error?.localizedDescription)
-        }
+        ref.removeValue()
+    }
+    @IBAction func signOut(_ sender: Any) {
+        UserDefaults.standard.set(false, forKey: "isSignedIn")
+            dismiss(animated: true, completion:nil)
     }
     
     
@@ -65,10 +71,12 @@ class NoteVC: UIViewController  {
 extension  NoteVC:UITableViewDataSource, UITableViewDelegate
 {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        interestData.count
+        
+        return interestData.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "interestsCell", for: indexPath)
         cell.textLabel?.text = interestData[indexPath.row]
         cell.textLabel?.font = .systemFont(ofSize: 12)
@@ -79,13 +87,12 @@ extension  NoteVC:UITableViewDataSource, UITableViewDelegate
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+         
         let note = interestData[indexPath.row]
         let vc = storyboard?.instantiateViewController(identifier: "MyNoteVC") as? MyNoteVC
         vc!.note = note
         navigationController?.pushViewController(vc!, animated: true)
-        
     }
-    
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
@@ -101,8 +108,7 @@ extension  NoteVC:UITableViewDataSource, UITableViewDelegate
             self.fetchNotes()
             tableView.reloadData()
             
-        }
-        
+        } 
         deleteAction.backgroundColor = .black
         let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
         configuration.performsFirstActionWithFullSwipe = false

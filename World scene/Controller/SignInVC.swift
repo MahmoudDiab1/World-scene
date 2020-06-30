@@ -20,29 +20,32 @@ class SignInVC: UIViewController{
     @IBOutlet weak var passwordSignIn: UITextField!
     @IBOutlet weak var emailSignIn: UITextField!
     @IBOutlet weak var errorMsgLbl: UILabel!
+    @IBOutlet weak var activityIndecator: UIActivityIndicatorView!
     
     
     //MARK:- Lifecycle
     
     override func viewDidAppear(_ animated: Bool) {
+        activityIndecator.isHidden = true
+        activityIndecator.stopAnimating()
         isLoggedIn()
     }
     override func viewDidLoad() {
         super.viewDidLoad()
         setupScene()
     }
-
+    
     //MARK:-   Actions and functions
     
     func isLoggedIn() {
-       if UserDefaults.standard.bool(forKey:"isSignedIn")==true  {
-       let mainTab = self.storyboard?.instantiateViewController(identifier: "MainTabBar") as! MainTabBar
-                      mainTab.modalPresentationStyle = .fullScreen
-                      mainTab.modalTransitionStyle = .flipHorizontal
-                      mainTab.selectedViewController = mainTab.viewControllers?[1]
-                      self.present(mainTab,animated: false,completion: nil)
-           }
-       }
+        if UserDefaults.standard.bool(forKey:"isSignedIn")==true  {
+            let mainTab = self.storyboard?.instantiateViewController(identifier: "MainTabBar") as! MainTabBar
+            mainTab.modalPresentationStyle = .fullScreen
+            mainTab.modalTransitionStyle = .flipHorizontal
+            mainTab.selectedViewController = mainTab.viewControllers?[1]
+            self.present(mainTab,animated: false,completion: nil)
+        }
+    }
     
     func setupScene() {
         view.bindToKeyboard()
@@ -66,15 +69,16 @@ class SignInVC: UIViewController{
     }
     
     @IBAction func signInTapped(_ sender: Any)  {
+        activityIndecator.isHidden = false
+        activityIndecator.startAnimating()
         guard let email=emailSignIn.text, let password=passwordSignIn.text else { return }
         guard email != "" && password != ""
-            else { self.errorMsgLbl.text=SigninError.emptyField.errorDescription ; return  }
-        
+            else { activityIndecator.isHidden = true
+                activityIndecator.stopAnimating();self.errorMsgLbl.text=SigninError.emptyField.errorDescription ; return  }
         Auth.auth().signIn(withEmail: email, password: password) { (user, error) in
-            guard error == nil else { self.errorMsgLbl.text=error?.localizedDescription ; return }
-            
-            UserDefaults.standard.set(true, forKey: "isSignedIn")
-            
+            guard error == nil else { self.activityIndecator.isHidden = true
+                self.activityIndecator.stopAnimating();self.errorMsgLbl.text = "Network disconnected.Make sure that you arn't ofline" ; return }
+            UserDefaults.standard.set(true, forKey: "isSignedIn") 
             let mainTab = self.storyboard?.instantiateViewController(identifier: "MainTabBar") as! MainTabBar
             mainTab.modalPresentationStyle = .fullScreen
             mainTab.modalTransitionStyle = .flipHorizontal
@@ -84,6 +88,8 @@ class SignInVC: UIViewController{
     }
     
     @IBAction func gotoSignUp(_ sender: UIButton)  {
+        activityIndecator.isHidden = false
+        activityIndecator.startAnimating()
         guard let signUpVC = self.storyboard?.instantiateViewController(withIdentifier: "SignUpVC") as? SignUpVC else { return }
         signUpVC.modalPresentationStyle = .fullScreen
         signUpVC.modalTransitionStyle = .flipHorizontal
@@ -91,8 +97,9 @@ class SignInVC: UIViewController{
     }
 }
 extension SignInVC: UITextFieldDelegate {
-func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-      textField.resignFirstResponder()
-      return true
-  }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
 }

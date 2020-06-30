@@ -13,6 +13,7 @@ class SignUpVC: UIViewController {
     
     //MARK:-Outlets-
     
+    @IBOutlet weak var activityIndecator: UIActivityIndicatorView!
     @IBOutlet weak var logoImage: UIImageView!
     @IBOutlet weak var userNameTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
@@ -26,8 +27,8 @@ class SignUpVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        
+        activityIndecator.stopAnimating()
+        activityIndecator.isHidden = true
     }
     override func viewDidAppear(_ animated: Bool) {
         
@@ -77,6 +78,8 @@ class SignUpVC: UIViewController {
     
     
     @IBAction func signUpTapped(_ sender: UIButton) {
+        activityIndecator.isHidden = false
+        activityIndecator.startAnimating()
         userNameTextField.resignFirstResponder()
         // extract clean user data.
         guard let userName = userNameTextField.text,
@@ -87,18 +90,25 @@ class SignUpVC: UIViewController {
         
         // Validating there aren't empty feiled.
         guard userName != "" && password != "" && confirmedPassword != "" && email != ""
-            else { errorMessageLbl.text = SignupError.emptyField.errorDescription; return}
+            else { activityIndecator.isHidden = true
+                activityIndecator.stopAnimating();errorMessageLbl.text = SignupError.emptyField.errorDescription; return}
         // validating password acceptance
         guard password.count >= 6
-            else { errorMessageLbl.text = SignupError.invalidePassword.errorDescription; return}
+            else { activityIndecator.isHidden = true
+                activityIndecator.stopAnimating();errorMessageLbl.text = SignupError.invalidePassword.errorDescription; return}
         //Validating entered passwords matched
         guard password == confirmedPassword
-            else { errorMessageLbl.text = SignupError.notMatchedPasswords.errorDescription; return }
+            else {activityIndecator.isHidden = true
+                activityIndecator.stopAnimating(); errorMessageLbl.text = SignupError.notMatchedPasswords.errorDescription; return }
         //creating user and save its data
         
         Auth.auth().createUser(withEmail: email, password: password){ (result, error) in
             guard error == nil
-                else { self.errorMessageLbl.text = SignupError.existedUser.errorDescription; return }
+                else {
+                    self.activityIndecator.isHidden = true
+                    self.activityIndecator.stopAnimating()
+                    self.errorMessageLbl.text = "Network disconnected or email already existed .Make sure that you arn't ofline and try again"
+                    ; return }
             
             guard let uid = result?.user.uid else{return}
             let userData:[String:Any] = ["name":userName,
@@ -117,6 +127,8 @@ class SignUpVC: UIViewController {
     }
     
     @IBAction func gotoSignIn(_ sender: Any)  {
+        activityIndecator.isHidden = false
+        activityIndecator.startAnimating()
         guard let signInVC = self.storyboard?.instantiateViewController(withIdentifier: "SignInVC") as? SignInVC else { return }
         signInVC.modalPresentationStyle = .fullScreen
         signInVC.modalTransitionStyle = .flipHorizontal 
@@ -125,6 +137,7 @@ class SignUpVC: UIViewController {
 }
 
 extension SignUpVC:UITextFieldDelegate {
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
@@ -132,3 +145,7 @@ extension SignUpVC:UITextFieldDelegate {
 }
 
 
+extension Error {
+    var code: Int { return (self as NSError).code }
+    var domain: String { return (self as NSError).domain }
+}

@@ -13,6 +13,7 @@ class ExploreVC: UIViewController {
     //    MARK:- Outlets
     @IBOutlet weak var searchNews: UISearchBar!
     @IBOutlet weak var exploreCollection: UICollectionView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var exploreTable: UITableView!
     //    MARK:- Variables
     var selectedArticle:article?
@@ -24,14 +25,18 @@ class ExploreVC: UIViewController {
     var exploreData=[article?]()
     var searchKeyword :String?
     var selectedIndex:IndexPath?
-    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        activityIndicator.isHidden = true
+        activityIndicator.stopAnimating()
+    }
     //    MARK:- Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         configureExploreTable()
         configureExploreCollection()
         configureSearchNews()
-        search(keyword: "explore")
+        search(keyword: "news")
         
     }
     override func viewDidAppear(_ animated: Bool) {
@@ -59,15 +64,27 @@ class ExploreVC: UIViewController {
         searchNews.delegate = self
     }
     
+    func networkAlert(message: String) {
+        let alertVC = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
+        alertVC.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        present(alertVC, animated: true, completion: nil)
+    }
+    
     func search(keyword:String?)  {
         EveryThingService().search(Entry: keyword) { (result:Result<ArticlesModel,APIError>) in
             switch result  {
             case .success(let articles):
                 self.exploreData = articles.articles
                 self.exploreTable.reloadData()
-            case .failure(let error):
-                print("ERROR TO HANDEL \(error.localizedDescription)")
-                self.exploreTable.reloadData()
+                self.activityIndicator.isHidden = true
+                self.activityIndicator.startAnimating()
+            case .failure(_):
+                DispatchQueue.main.async {
+                    let alertVC = UIAlertController(title: "Error", message: "No internet", preferredStyle: .alert)
+                    alertVC.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                    self.present(alertVC, animated: true, completion: nil)
+                }
+                
             }
         }
     }
@@ -86,6 +103,9 @@ class ExploreVC: UIViewController {
 extension ExploreVC : UITableViewDataSource, UITableViewDelegate
 {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        activityIndicator.isHidden = false
+        activityIndicator.startAnimating()
         return exploreData.count
     }
     
@@ -99,13 +119,17 @@ extension ExploreVC : UITableViewDataSource, UITableViewDelegate
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         selectedIndex = indexPath
+        
+        activityIndicator.isHidden = true
+        activityIndicator.stopAnimating()
         tableView.beginUpdates()
         tableView.endUpdates()
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if selectedIndex == indexPath
-        {return UIScreen.main.bounds.height/2} else
+        { activityIndicator.isHidden = true
+            activityIndicator.stopAnimating();return UIScreen.main.bounds.height/2} else
         {return UIScreen.main.bounds.height/4.5
             
         }
